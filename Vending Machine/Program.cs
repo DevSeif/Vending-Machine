@@ -13,7 +13,10 @@ namespace MyApplication
             while (true)
             {
                 Console.Write("\n\n1. Använd vending machine \n2. Kolla vad du har köpt \n: ");
-                int val = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    int val = Convert.ToInt32(Console.ReadLine());
+                
                 switch (val)
                 {
                     case 1:
@@ -22,6 +25,11 @@ namespace MyApplication
                     case 2:
                         CheckBoughtProducts();
                         break;
+                }
+                }
+                catch
+                {
+                    Console.WriteLine("Ogiltig input");
                 }
             }
 
@@ -41,6 +49,7 @@ namespace MyApplication
                 i++;
             }
             Console.Write("Vilken produkt vill du använda: ");
+            try { 
             int val = Convert.ToInt32(Console.ReadLine());
             
             if (val <= boughtProducts.Count)
@@ -49,8 +58,10 @@ namespace MyApplication
             }
             else
             {
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("Ogiltig input");
             }
+            }
+            catch { Console.WriteLine("Ogiltig input"); }
         }
 
         static void CheckProduct(int index)
@@ -124,7 +135,7 @@ namespace MyApplication
             }
             else
             {
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("Ogiltig input");
                 Vending();
             }
 
