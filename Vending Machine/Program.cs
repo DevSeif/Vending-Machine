@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Vending_Machine;
+﻿using Vending_Machine;
 
 namespace MyApplication
 {
@@ -108,6 +107,7 @@ namespace MyApplication
             machine.ShowAll();
             try
             {
+                Console.Write(": ");
                 int val = Convert.ToInt32(Console.ReadLine());
 
                 if (val == 0)
@@ -132,19 +132,19 @@ namespace MyApplication
                     }
                     else
                     {
-                        Console.WriteLine("Du har inte råd");
+                        Console.WriteLine("Du har inte råd\n");
                         Vending();
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Ogiltig input");
+                    Console.WriteLine("Ogiltig input\n");
                     Vending();
                 }
             }
             catch (Exception)
             {
-                Console.WriteLine("Ogiltig input");
+                Console.WriteLine("Ogiltig input\n");
                 Vending();
             }
 

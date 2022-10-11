@@ -1,11 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Vending_Machine
+﻿namespace Vending_Machine
 {
     public class VendingMachine : IVending
     {
-        static int[] moneyDenominations = { 1, 5, 10, 20, 50, 100, 500, 1000 };
-        static ReadOnlyCollection<int> moneyReadOnly = new ReadOnlyCollection<int>(moneyDenominations);
+        readonly static int[] moneyDenominations = { 1, 5, 10, 20, 50, 100, 500, 1000 };
         public int poolMoney = 0;
         Dictionary<int, int> myDictionary = new Dictionary<int, int>();
         List<Product> products = new List<Product>
@@ -30,7 +27,6 @@ namespace Vending_Machine
         };
         public Product Purchase(int argIndex)
         {
-            //argIndex++;
             Product product = products[argIndex];
             poolMoney -= products[argIndex].Price;
             products.RemoveAt(argIndex);
@@ -56,7 +52,7 @@ namespace Vending_Machine
         {
             int i = 1;
 
-            foreach (int e in moneyReadOnly.Reverse())
+            foreach (int e in moneyDenominations.Reverse())
             {
                 while (e <= poolMoney)
                 {
@@ -71,7 +67,7 @@ namespace Vending_Machine
 
         public bool CheckInput(int arg)
         {
-            foreach (int e in moneyReadOnly)
+            foreach (int e in moneyDenominations)
             {
                 if (arg == e) { return true; }
             }
