@@ -49,7 +49,7 @@ namespace MyApplication
                 i++;
             }
             Console.Write("Vilken produkt vill du använda: ");
-            try { 
+            
             int val = Convert.ToInt32(Console.ReadLine());
             
             if (val <= boughtProducts.Count)
@@ -60,8 +60,8 @@ namespace MyApplication
             {
                 Console.WriteLine("Ogiltig input");
             }
-            }
-            catch { Console.WriteLine("Ogiltig input"); }
+            
+            
         }
 
         static void CheckProduct(int index)
@@ -106,34 +106,43 @@ namespace MyApplication
         {
             Console.WriteLine("Du har " + machine.poolMoney + "kr i vending machine \n[0] Ta ut pengarna");
             machine.ShowAll();
-            int val = Convert.ToInt32(Console.ReadLine());
-            if(val == 0)
+            try
             {
-                Dictionary<int, int> myDictionary = machine.EndTransaction();
-                Console.Write("Du får tillbaka ");
-                foreach (var e in myDictionary)
+                int val = Convert.ToInt32(Console.ReadLine());
+
+                if (val == 0)
                 {
-                    if (e.Value > 10) { Console.Write(e.Value + " lapp, "); }
-                    else { Console.Write(e.Value + " mynt, "); }
+                    Dictionary<int, int> myDictionary = machine.EndTransaction();
+                    Console.Write("Du får tillbaka ");
+                    foreach (var e in myDictionary)
+                    {
+                        if (e.Value > 10) { Console.Write(e.Value + " lapp, "); }
+                        else { Console.Write(e.Value + " mynt, "); }
+                    }
+                    return;
                 }
-                return;
-            }
-            else if (val <= machine.GetProductLength())
-            {
-                bool isItEnough = machine.IsItEnough(val);
-                if (isItEnough)
+                else if (val <= machine.GetProductLength())
                 {
-                    Product purchasedProduct = machine.Purchase(val - 1);
-                    boughtProducts.Add(purchasedProduct);
-                    Vending();
+                    bool isItEnough = machine.IsItEnough(val);
+                    if (isItEnough)
+                    {
+                        Product purchasedProduct = machine.Purchase(val - 1);
+                        boughtProducts.Add(purchasedProduct);
+                        Vending();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Du har inte råd");
+                        Vending();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Du har inte råd");
+                    Console.WriteLine("Ogiltig input");
                     Vending();
                 }
             }
-            else
+            catch (Exception)
             {
                 Console.WriteLine("Ogiltig input");
                 Vending();
