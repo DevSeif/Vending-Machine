@@ -29,14 +29,20 @@ namespace MyApplication
 
         static void CheckBoughtProducts()
         {
+            if (boughtProducts.Count == 0)
+            {
+                Console.WriteLine("Du har ingen produkt");
+                return;
+            }
             int i = 0;
             foreach (var product in boughtProducts)
             {
-                Console.WriteLine($"[{i}] {product.Name}");
+                Console.WriteLine($"\n[{i}] {product.Name}");
                 i++;
             }
             Console.Write("Vilken produkt vill du använda: ");
             int val = Convert.ToInt32(Console.ReadLine());
+            
             if (val <= boughtProducts.Count)
             {
                 CheckProduct(val);
