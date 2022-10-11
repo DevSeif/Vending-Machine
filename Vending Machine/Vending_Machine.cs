@@ -1,8 +1,13 @@
-﻿namespace Vending_Machine
+﻿using System.Collections.ObjectModel;
+
+namespace Vending_Machine
 {
     public class VendingMachine : IVending
     {
-        public int poolMoney = 1000;
+        static int[] moneyDenominations = { 1, 5, 10, 20, 50, 100, 500, 1000 };
+        static ReadOnlyCollection<int> moneyReadOnly = new ReadOnlyCollection<int>(moneyDenominations);
+        public int poolMoney = 0;
+        Dictionary<int, int> myDictionary = new Dictionary<int, int>();
         List<Product> products = new List<Product>
         {
             new Snack(12, "Snickers"),
@@ -25,6 +30,7 @@
         };
         public Product Purchase(int argIndex)
         {
+            //argIndex++;
             Product product = products[argIndex];
             poolMoney -= products[argIndex].Price;
             products.RemoveAt(argIndex);
@@ -33,7 +39,7 @@
 
         public void ShowAll()
         {
-            int index = 0;
+            int index = 1;
             foreach(Product product in products)
             {
                 Console.WriteLine($"[{index}] {product.Name} {product.Price}kr");
@@ -46,11 +52,41 @@
             poolMoney += money;
         }
 
-        public int EndTransaction()
+        public Dictionary<int, int> EndTransaction()
         {
-            int temp = poolMoney;
-            poolMoney = 0;
-            return temp;
+            int i = 1;
+
+            foreach (int e in moneyReadOnly.Reverse())
+            {
+                while (e <= poolMoney)
+                {
+                    myDictionary.Add(i, e);
+                    i++;
+                    poolMoney -= e;
+                }
+            }
+            return myDictionary;
+
         }
+
+        public bool CheckInput(int arg)
+        {
+            foreach (int e in moneyReadOnly)
+            {
+                if (arg == e) { return true; }
+            }
+            return false;
+        }
+
+        public bool IsItEnough(int argIndex)
+        {
+            if (poolMoney >= products[argIndex - 1].Price)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int GetProductLength() { return products.Count; }
     }
 }
