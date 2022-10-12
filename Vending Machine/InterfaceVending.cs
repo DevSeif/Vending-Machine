@@ -2,12 +2,12 @@
 {
     public interface IVending
     {
-        public Product Purchase(int argIndex);
+        Product Purchase(int argIndex);
 
-        public void ShowAll();
+        void ShowAll();
 
-        public void InsertMoney(int money);
+        void InsertMoney(int money);
 
-        public Dictionary<int, int> EndTransaction();
+        Dictionary<int, int> EndTransaction();
     }
 }
