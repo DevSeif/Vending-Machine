@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Vending_Machine
 {
     public class VendingMachine : IVending
@@ -41,7 +39,7 @@ namespace Vending_Machine
         public void ShowAll()
         {
             int index = 1;
-            foreach(Product product in products)
+            foreach (Product product in products)
             {
                 Console.WriteLine($"[{index}] {product.Name} {product.Price}kr");
                 index++;
@@ -66,10 +64,12 @@ namespace Vending_Machine
                     poolMoney -= e;
                 }
             }
-            return myDictionary;
+
+            Dictionary<int, int> result = myDictionary;
+            return result;
         }
 
-       public bool CheckInput(int arg)
+        public bool CheckInput(int arg)
         {
             foreach (int e in moneyDenominations)
             {
@@ -172,6 +172,7 @@ namespace Vending_Machine
                         if (e.Value > 10) { Console.Write(e.Value + " lapp, "); }
                         else { Console.Write(e.Value + " mynt, "); }
                     }
+                    myDictionary.Clear();
                     return;
                 default:
                     Console.WriteLine("Ogiltig input");
@@ -183,9 +184,11 @@ namespace Vending_Machine
         {
             Console.WriteLine("Du har " + poolMoney + "kr i vending machine \n[0] Ta ut pengarna/Sätt in mer");
             machine.ShowAll();
+            
+                Console.Write(": ");
+                
             try
             {
-                Console.Write(": ");
                 int val = Convert.ToInt32(Console.ReadLine());
 
                 if (val == 0)
@@ -215,7 +218,7 @@ namespace Vending_Machine
             }
             catch (Exception)
             {
-                Console.WriteLine("Ogiltig input\n");
+                Console.WriteLine("Ogiltig input");
                 Vending();
             }
 
